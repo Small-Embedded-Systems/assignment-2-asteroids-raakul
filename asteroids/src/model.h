@@ -5,21 +5,41 @@ struct point {
 typedef struct point coordinate_t;
 typedef struct point vector_t;
 
-/* Some insitial struct types if you want to usd them */
+/* Some initial struct types if you want to usd them */
 struct ship {
-    coordinate_t p;
-    vector_t     v;
+		int heading; 
+		int engines;
+		bool fire;
+    coordinate_t position;
+    vector_t     velocity;
 };
 
-/* initial struts for building linked lists */
-struct rock {
-    coordinate_t p;
-    struct rock *next;
-};
+/* Asteroid structure for use in the asteroid linked list */
+typedef struct asteroid {
+    coordinate_t position;
+		vector_t 	velocity;
+		int size;
+		bool live;
+    struct asteroid *next;
+} asteroid_t;
 
-struct missile {
-    coordinate_t p;
+/* Missile structure for use in the missile linked list */
+typedef struct missile {
+    coordinate_t position;
+		vector_t     velocity;
+		bool live;
     struct missile *next;
-};
+} missile_t;
 
+/* Main physics method */
 void physics(void);
+
+/* Asteroid and missile list pointers */
+asteroid_t *allocateNodeAsteroid(void);
+missile_t *allocateNodeMissile(void);
+
+/* Externalised variables */
+extern struct	asteroid *asteroidCurrent;
+extern const int asteroidHeapSize;
+extern struct missile *missileCurrent;
+extern const int missileHeapSize;
